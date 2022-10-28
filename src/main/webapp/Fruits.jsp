@@ -6,15 +6,7 @@
     <title>Fruits</title>
 </head>
 <body>
-    <center>
-        <h1>Fruits</h1>
-        <h2>
-            <a href="/new">Add New Fruits</a>
-            &nbsp;&nbsp;&nbsp;
-            <a href="/list">List All Fruitrs</a>
-             
-        </h2>
-    </center>
+
     <div align="center">
         <c:if test="${fruits != null}">
             <form action="update" method="post">
@@ -29,7 +21,7 @@
                         Edit Fruits
                     </c:if>
                     <c:if test="${fruits == null}">
-                        Add New Fruits
+                  
                     </c:if>
                 </h2>
             </caption>
