@@ -12,14 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Fruits;
-import service.FruitsService;
+import repository.FruitsDao;
+import repository.FruitsDaoImpl;
+
 
 @WebServlet("/")
 public class FruitsController extends HttpServlet {
-	private FruitsService fruitsService;
+	 private FruitsDao fruitsDao;
 
 	public void init() {
-		fruitsService = new FruitsService();
+		FactoryPattern factoryPattern=new FactoryPattern();
+		 fruitsDao=factoryPattern.getInstance("FruitsDaoImpl");
+		//fruitsService= new FruitsServiceImpl();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,7 +67,7 @@ public class FruitsController extends HttpServlet {
 	}
 
 	private void fruitsData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		System.out.println("Inside new fruits");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("Fruits.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -72,7 +76,7 @@ public class FruitsController extends HttpServlet {
 			throws SQLException, ServletException, IOException {
 
 		String fruit_id = request.getParameter("fruit_id");
-		Fruits existingFruits = fruitsService.selectFruit(fruit_id);
+		Fruits existingFruits = fruitsDao.selectFruit(fruit_id);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("Fruits.jsp");
 		request.setAttribute("fruits", existingFruits);
 
@@ -94,13 +98,13 @@ public class FruitsController extends HttpServlet {
 		Fruits newFruits = new Fruits(genus, name, fruit_id, family, order_name, carbohydrates, protein, fat, calories,sugar);
 		System.out.println("Value updated" + fat);
 		System.out.println("Value updated" + calories);
-		fruitsService.updateFruits(newFruits);
+		fruitsDao.updateFruits(newFruits);
 		response.sendRedirect("list");
 	}
 
 	private void listFruits(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-
-		List<Fruits> listFruits = fruitsService.selectAllFruits();
+		System.out.println("inside method");
+		List<Fruits> listFruits = fruitsDao.selectAllFruits();
 
 		request.setAttribute("listFruits", listFruits);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("FruitList.jsp");
@@ -121,16 +125,15 @@ public class FruitsController extends HttpServlet {
 		String sugar = request.getParameter("sugar");
 		System.out.println("Value inserted" + calories);
 
-		Fruits newFruits = new Fruits(genus, name, fruit_id, family, order_name, carbohydrates, protein, fat, calories,
-				sugar);
-		fruitsService.insertFruits(newFruits);
+		Fruits newFruits = new Fruits(genus, name, fruit_id, family, order_name, carbohydrates, protein, fat, calories,sugar);
+		fruitsDao.insertFruits(newFruits);
 		response.sendRedirect("list");
 	}
 
 	private void deleteFruits(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		String fruit_id = request.getParameter("fruit_id");
-		fruitsService.deleteUser(fruit_id);
+		fruitsDao.deleteFruit(fruit_id);
 		response.sendRedirect("list");
 
 	}

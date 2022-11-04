@@ -1,4 +1,4 @@
-package service;
+package repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import model.Fruits;
 
-public class FruitsService {
+public class FruitsDaoImpl implements FruitsDao{
 	private String jdbcUrl = "jdbc:mysql://localhost:3306/app";
 	private String username = "root";
 	private String password = "Sql@1234#";
@@ -34,40 +34,17 @@ public class FruitsService {
 		return connection;
 	}
 
-	public void insertFruits(Fruits fruits) throws SQLException {
-
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_FRUITS)) {
-			preparedStatement.setString(1, fruits.getGenus());
-			preparedStatement.setString(2, fruits.getName());
-			preparedStatement.setString(3, fruits.getFruit_id());
-			preparedStatement.setString(4, fruits.getFamily());
-			preparedStatement.setString(5, fruits.getOrder_name());
-
-			preparedStatement.setString(6, fruits.getCarbohydrates());
-			preparedStatement.setString(7, fruits.getProtein());
-			preparedStatement.setString(8, fruits.getFat());
-			preparedStatement.setString(9, fruits.getCalories());
-			preparedStatement.setString(10, fruits.getSugar());
-
-			preparedStatement.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
+	
+	
 	public Fruits selectFruit(String fruit_id) {
 		Fruits fruits = null;
-		// Step 1: Establishing a Connection
+		
 		try (Connection connection = getConnection();
-				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FRUITS_BY_ID)) {
+				
+			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FRUITS_BY_ID)) {
 			preparedStatement.setString(1, fruit_id);
-
 			ResultSet rs = preparedStatement.executeQuery();
 
-			// Step 4: Process the ResultSet object.
 			while (rs.next()) {
 				String genus = rs.getString("genus");
 				String name = rs.getString("name");
@@ -88,15 +65,7 @@ public class FruitsService {
 		return fruits;
 	}
 
-	public boolean deleteUser(String fruit_id) throws SQLException {
-		boolean rowDeleted;
-		try (Connection connection = getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_FRUITS);) {
-			statement.setString(1, fruit_id);
-			rowDeleted = statement.executeUpdate() > 0;
-		}
-		return rowDeleted;
-	}
+	
 
 	public List<Fruits> selectAllFruits() {
 
@@ -104,8 +73,7 @@ public class FruitsService {
 
 		try (Connection connection = getConnection();
 
-				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FRUITS);) {
+		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FRUITS);) {
 
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -128,13 +96,13 @@ public class FruitsService {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			;
+			
 		}
 		return fruits;
 	}
 
-	public boolean updateFruits(Fruits fruits) throws SQLException {
-		boolean rowUpdated;
+	public boolean updateFruits(Fruits fruits) {
+		boolean rowUpdated = false;
 
 		try (Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_FRUITS);) {
@@ -151,8 +119,53 @@ public class FruitsService {
 			preparedStatement.setString(10, fruits.getFruit_id());
 
 			rowUpdated = preparedStatement.executeUpdate() > 0;
+		
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
 		}
 		return rowUpdated;
+		
+	}
+
+
+	@Override
+	public void insertFruits(Fruits fruits) {
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_FRUITS)) {
+			preparedStatement.setString(1, fruits.getGenus());
+			preparedStatement.setString(2, fruits.getName());
+			preparedStatement.setString(3, fruits.getFruit_id());
+			preparedStatement.setString(4, fruits.getFamily());
+			preparedStatement.setString(5, fruits.getOrder_name());
+
+			preparedStatement.setString(6, fruits.getCarbohydrates());
+			preparedStatement.setString(7, fruits.getProtein());
+			preparedStatement.setString(8, fruits.getFat());
+			preparedStatement.setString(9, fruits.getCalories());
+			preparedStatement.setString(10, fruits.getSugar());
+
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+
+	@Override
+	public boolean deleteFruit(String fruit_id) {
+		boolean rowDeleted = false;
+		try (Connection connection = getConnection();
+				PreparedStatement statement = connection.prepareStatement(DELETE_FRUITS);) {
+			statement.setString(1, fruit_id);
+			rowDeleted = statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+		return rowDeleted;
 	}
 
 }

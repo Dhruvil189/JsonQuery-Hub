@@ -1,4 +1,4 @@
-package service;
+package repository;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
@@ -50,7 +50,7 @@ public class TestFruits {
 	 * @Mock private FruitsService fruitsService;
 	 */
   // public List<Fruits> f;
-   private FruitsService fs;
+   private FruitsDao fs;
    
    @Test
   public void setUp() throws SQLException {
