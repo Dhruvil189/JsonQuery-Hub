@@ -9,23 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Fruits;
+import other_modules.Constants;
 
 public class FruitsDaoImpl implements FruitsDao{
-	private String jdbcUrl = "jdbc:mysql://localhost:3306/app";
-	private String username = "root";
-	private String password = "Sql@1234#";
+	
+	
 
-	private static final String INSERT_FRUITS = "INSERT INTO fruits"+ "  (genus, name, fruit_id , family, order_name, carbohydrates, protein, fat,calories, sugar) VALUES "+ "(?,?,?,?,?,?,?,?,?,?);";
-	private static final String SELECT_FRUITS_BY_ID = "select genus, name, fruit_id,family,order_name,carbohydrates,protein,fat,calories,sugar from fruits where fruit_id =?";
-	private static final String SELECT_ALL_FRUITS = "select genus, name, fruit_id,family,order_name,carbohydrates,protein,fat,calories,sugar from fruits";
-	private static final String UPDATE_FRUITS = "update fruits set genus = ?,name= ?,family=?,order_name=?,carbohydrates=?,protein=?,fat=?,calories=?,sugar=? where fruit_id = ?";
-	private static final String DELETE_FRUITS = "delete from fruits where fruit_id = ?;";
 
 	protected Connection getConnection() {
 		Connection connection = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection(jdbcUrl, username, password);
+			connection = DriverManager.getConnection(Constants.JDBC_URL,Constants.USERNAME,Constants.PASSWORD);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -41,7 +36,7 @@ public class FruitsDaoImpl implements FruitsDao{
 		
 		try (Connection connection = getConnection();
 				
-			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FRUITS_BY_ID)) {
+			PreparedStatement preparedStatement = connection.prepareStatement(Constants.SELECT_FRUITS_BY_ID)) {
 			preparedStatement.setString(1, fruit_id);
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -73,7 +68,7 @@ public class FruitsDaoImpl implements FruitsDao{
 
 		try (Connection connection = getConnection();
 
-		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FRUITS);) {
+		PreparedStatement preparedStatement = connection.prepareStatement(Constants.SELECT_ALL_FRUITS);) {
 
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -105,7 +100,7 @@ public class FruitsDaoImpl implements FruitsDao{
 		boolean rowUpdated = false;
 
 		try (Connection connection = getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_FRUITS);) {
+			PreparedStatement preparedStatement = connection.prepareStatement(Constants.UPDATE_FRUITS);) {
 			preparedStatement.setString(1, fruits.getGenus());
 			preparedStatement.setString(2, fruits.getName());
 			preparedStatement.setString(3, fruits.getFamily());
@@ -132,7 +127,7 @@ public class FruitsDaoImpl implements FruitsDao{
 	@Override
 	public void insertFruits(Fruits fruits) {
 		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_FRUITS)) {
+				PreparedStatement preparedStatement = connection.prepareStatement(Constants.INSERT_FRUITS)) {
 			preparedStatement.setString(1, fruits.getGenus());
 			preparedStatement.setString(2, fruits.getName());
 			preparedStatement.setString(3, fruits.getFruit_id());
@@ -158,7 +153,7 @@ public class FruitsDaoImpl implements FruitsDao{
 	public boolean deleteFruit(String fruit_id) {
 		boolean rowDeleted = false;
 		try (Connection connection = getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_FRUITS);) {
+				PreparedStatement statement = connection.prepareStatement(Constants.DELETE_FRUITS);) {
 			statement.setString(1, fruit_id);
 			rowDeleted = statement.executeUpdate() > 0;
 		} catch (SQLException e) {

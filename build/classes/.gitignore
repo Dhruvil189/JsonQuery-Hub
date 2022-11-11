@@ -1,4 +1,7 @@
-/controller/
-/FactoryPattern.class
-/service/
 /repository/
+/controller/
+/model/
+/Test/
+/test/
+/design_pattern/
+/other_modules/

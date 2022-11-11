@@ -4,41 +4,16 @@ package model;
 
 public class Fruits {
 	
-
-
-
-
-	
-
-
-
-	
-	public Fruits(String genus, String name, String fruit_id, String family, String order_name, String carbohydrates,
-			String protein, String fat,String calories,String sugar) {
-		super();
-		this.genus = genus;
-		this.name = name;
-		this.fruit_id = fruit_id;
-		this.family = family;
-		this.order_name = order_name;
-		this.carbohydrates = carbohydrates;
-		this.protein = protein;
-		this.fat = fat;
-		this.calories = calories;
-		this.sugar = sugar;
-	}
-
-
-
-
-	
-	public Fruits() {
-		// TODO Auto-generated constructor stub
-	}
-
-
-
-
+	private String genus;
+	private String name;
+	private String fruit_id;
+	private String family;
+	private String order_name;
+	private String carbohydrates;
+	private String protein;
+	private String fat;
+	private String calories;
+	private String sugar;
 
 	public String getGenus() {
 		return genus;
@@ -89,29 +64,12 @@ public class Fruits {
 		this.fat = fat;
 	}
 
-	
 	public String getSugar() {
 		return sugar;
 	}
 	public void setSugar(String sugar) {
 		this.sugar = sugar;
 	}
-
-
-
-	private String genus;
-	private String name;
-	private String fruit_id;
-	private String family;
-	private String order_name;
-	private String carbohydrates;
-	private String protein;
-	private String fat;
-	
-	private String calories;
-
-
-
 
 	public String getCalories() {
 		return calories;
@@ -121,17 +79,25 @@ public class Fruits {
 	}
 
 
-
-
-	private String sugar;
 	
+	public Fruits() {
+		
+	}
 
 
+	public Fruits(String genus, String name, String fruit_id, String family, String order_name, String carbohydrates,
+			String protein, String fat,String calories,String sugar) {
+		super();
+		this.genus = genus;
+		this.name = name;
+		this.fruit_id = fruit_id;
+		this.family = family;
+		this.order_name = order_name;
+		this.carbohydrates = carbohydrates;
+		this.protein = protein;
+		this.fat = fat;
+		this.calories = calories;
+		this.sugar = sugar;
+	}
 
-
-
-	
-	
-	
-	
 }

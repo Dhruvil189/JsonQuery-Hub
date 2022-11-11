@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Fruits;
+import other_modules.FactoryPattern;
 import repository.FruitsDao;
 import repository.FruitsDaoImpl;
 
@@ -23,7 +24,7 @@ public class FruitsController extends HttpServlet {
 	public void init() {
 		FactoryPattern factoryPattern=new FactoryPattern();
 		 fruitsDao=factoryPattern.getInstance("FruitsDaoImpl");
-		//fruitsService= new FruitsServiceImpl();
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
