@@ -27,7 +27,7 @@ public class TestFruits {
 	@Test
 	public void selectFruitById() throws SQLException {
 	   FruitsDaoImpl fruitsDaoImpl=new FruitsDaoImpl();
-	   Fruits fruits=fruitsDaoImpl.selectFruit("700");
+	   Fruits fruits=fruitsDaoImpl.selectFruit("1");
 	   assertNotEquals(fruits,null);
 	   assertNotEquals(fruits.getFamily()," ");
    }
@@ -60,7 +60,7 @@ public class TestFruits {
    @Test
    public void deleteFruit() throws SQLException {
  	   FruitsDaoImpl fruitsDaoImpl=new FruitsDaoImpl();
- 	   Boolean s =fruitsDaoImpl.deleteFruit("85");
+ 	   Boolean value =fruitsDaoImpl.deleteFruit("85");
  	   Fruits fruits=fruitsDaoImpl.selectFruit("85");
  	   assertEquals(fruits,null);
  	}
@@ -68,7 +68,7 @@ public class TestFruits {
    @Test
    public void updateFruits() throws SQLException {
  	   FruitsDaoImpl fruitsDaoImpl=new FruitsDaoImpl();
- 	   Fruits fruits=fruitsDaoImpl.selectFruit("84");
+ 	   Fruits fruits=fruitsDaoImpl.selectFruit("80");
  	   fruits.setGenus("Mango");
  	   Boolean var=fruitsDaoImpl.updateFruits(fruits);
  	   assertTrue(var);

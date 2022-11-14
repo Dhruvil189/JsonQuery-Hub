@@ -12,7 +12,8 @@ public class ReadDataFromApi {
 
 	public static void main(String[] args) {
 		 try {
-			    URL url = new URL("https://www.fruityvice.com//api/fruit/all");
+
+	            URL url = new URL("https://www.fruityvice.com//api/fruit/all");
 	            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 	            if (connection.getResponseCode() == 200) {
 	                InputStream inputStream = connection.getInputStream();
@@ -26,9 +27,12 @@ public class ReadDataFromApi {
 	                    bufferedWriter.newLine();
 	                    line = bufferedReader.readLine();
 	                }
+
 	                bufferedWriter.close();
 	            }
-		 } catch (Exception e) {
+		 }
+		
+		  catch (Exception e) {
 	            System.out.println(e);
 	        }
 	    }

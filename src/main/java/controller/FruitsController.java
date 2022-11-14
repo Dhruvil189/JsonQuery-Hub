@@ -12,17 +12,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Fruits;
-import other_modules.FactoryPattern;
+
+import other_modules.FruitsFactory;
 import repository.FruitsDao;
 import repository.FruitsDaoImpl;
-
 
 @WebServlet("/")
 public class FruitsController extends HttpServlet {
 	 private FruitsDao fruitsDao;
 
 	public void init() {
-		FactoryPattern factoryPattern=new FactoryPattern();
+		 FruitsFactory factoryPattern=new FruitsFactory();
 		 fruitsDao=factoryPattern.getInstance("FruitsDaoImpl");
 		
 	}
@@ -68,7 +68,7 @@ public class FruitsController extends HttpServlet {
 	}
 
 	private void fruitsData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Inside new fruits");
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("Fruits.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -104,7 +104,7 @@ public class FruitsController extends HttpServlet {
 	}
 
 	private void listFruits(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-		System.out.println("inside method");
+		
 		List<Fruits> listFruits = fruitsDao.selectAllFruits();
 
 		request.setAttribute("listFruits", listFruits);

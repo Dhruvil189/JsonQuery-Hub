@@ -13,9 +13,6 @@ import other_modules.Constants;
 
 public class FruitsDaoImpl implements FruitsDao{
 	
-	
-
-
 	protected Connection getConnection() {
 		Connection connection = null;
 		try {
@@ -51,7 +48,6 @@ public class FruitsDaoImpl implements FruitsDao{
 				String fat = rs.getString("fat");
 				String calories = rs.getString("calories");
 				String sugar = rs.getString("sugar");
-
 				fruits = new Fruits(genus, name, fruitId, family, order_name, carbohydrates, protein, fat, calories,sugar);
 			}
 		} catch (SQLException e) {
@@ -65,15 +61,10 @@ public class FruitsDaoImpl implements FruitsDao{
 	public List<Fruits> selectAllFruits() {
 
 		List<Fruits> fruits = new ArrayList<>();
-
 		try (Connection connection = getConnection();
-
-		PreparedStatement preparedStatement = connection.prepareStatement(Constants.SELECT_ALL_FRUITS);) {
-
+			PreparedStatement preparedStatement = connection.prepareStatement(Constants.SELECT_ALL_FRUITS);) {
 			ResultSet rs = preparedStatement.executeQuery();
-
 			while (rs.next()) {
-
 				String genus = rs.getString("genus");
 				String name = rs.getString("name");
 				String fruit_id = rs.getString("fruit_id");
@@ -84,9 +75,7 @@ public class FruitsDaoImpl implements FruitsDao{
 				String fat = rs.getString("fat");
 				String calories = rs.getString("calories");
 				String sugar = rs.getString("sugar");
-
-				fruits.add(new Fruits(genus, name, fruit_id, family, order_name, carbohydrates, protein, fat, calories,
-						sugar));
+				fruits.add(new Fruits(genus, name, fruit_id, family, order_name, carbohydrates, protein, fat, calories,sugar));
 
 			}
 		} catch (SQLException e) {
@@ -105,14 +94,12 @@ public class FruitsDaoImpl implements FruitsDao{
 			preparedStatement.setString(2, fruits.getName());
 			preparedStatement.setString(3, fruits.getFamily());
 			preparedStatement.setString(4, fruits.getOrder_name());
-
 			preparedStatement.setString(5, fruits.getCarbohydrates());
 			preparedStatement.setString(6, fruits.getProtein());
 			preparedStatement.setString(7, fruits.getFat());
 			preparedStatement.setString(8, fruits.getCalories());
 			preparedStatement.setString(9, fruits.getSugar());
 			preparedStatement.setString(10, fruits.getFruit_id());
-
 			rowUpdated = preparedStatement.executeUpdate() > 0;
 		
 		} catch (SQLException e) {
@@ -133,13 +120,11 @@ public class FruitsDaoImpl implements FruitsDao{
 			preparedStatement.setString(3, fruits.getFruit_id());
 			preparedStatement.setString(4, fruits.getFamily());
 			preparedStatement.setString(5, fruits.getOrder_name());
-
 			preparedStatement.setString(6, fruits.getCarbohydrates());
 			preparedStatement.setString(7, fruits.getProtein());
 			preparedStatement.setString(8, fruits.getFat());
 			preparedStatement.setString(9, fruits.getCalories());
 			preparedStatement.setString(10, fruits.getSugar());
-
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {

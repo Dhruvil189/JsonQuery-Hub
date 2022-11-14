@@ -1,7 +1,5 @@
 package model;
 
-
-
 public class Fruits {
 	
 	private String genus;
